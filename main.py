@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.metrics import router as metrics_router
+from app.routes.metrics import router as metrics_router
 
 app = FastAPI()
 
