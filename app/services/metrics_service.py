@@ -15,9 +15,9 @@ def get_system_metrics():
             "percent": psutil.virtual_memory().percent
         },
         "disk":{
-            "total": psutil.disk_usage("/").total,
-            "used": psutil.disk_usage("/").used,
-            "percent": psutil.disk_usage("/").percent
+            "total": psutil.disk_usage("C:\\").total,
+            "used": psutil.disk_usage("C:\\").used,
+            "percent": psutil.disk_usage("C:\\").percent
     }
     }
 
@@ -25,7 +25,7 @@ def create_metric(db : Session):
     data = {
         "cpu_percent" : psutil.cpu_percent(),
         "memory_percent" : psutil.virtual_memory().percent,
-        "disk_percent" : psutil.disk_usage("/").percent
+        "disk_percent" : psutil.disk_usage("C:\\").percent
     }
 
     metric = Metrics(**data)
@@ -35,3 +35,11 @@ def create_metric(db : Session):
     db.refresh(metric)
 
     return(metric)
+
+def get_metrics_history(db:Session , limit: int = 50 ):
+    return(
+        db.query(Metrics)
+        .order_by(Metrics.created_at.desc())
+        .limit(limit)
+        .all()
+    )
