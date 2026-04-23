@@ -15,12 +15,15 @@ def get_metrics():
 
 
 # coleta e salva métricas no banco
-@router.post("/")
+@router.post("/",response_model=MetricsHistoryResponse)
 def create_metric_route(db: Session = Depends(get_db)):
     return create_metric(db)
 
 # lista as ultimas metricas 
 
 @router.get("/history",response_model=list[MetricsHistoryResponse])
-def metrics_history(limit : int = 50 , db : Session = Depends(get_db)):
-    return get_metrics_history(db , limit)
+def metrics_history(
+    limit : int = 50,
+    skip : int = 0,
+    db : Session = Depends(get_db)):
+    return get_metrics_history(db , limit, skip)

@@ -36,10 +36,11 @@ def create_metric(db : Session):
 
     return(metric)
 
-def get_metrics_history(db:Session , limit: int = 50 ):
+def get_metrics_history(db:Session , limit: int = 50, skip: int = 0 ):
     return(
         db.query(Metrics)
         .order_by(Metrics.created_at.desc())
+        .offset(skip)
         .limit(limit)
         .all()
     )
