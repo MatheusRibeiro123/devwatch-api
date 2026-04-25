@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history
+from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric
 from app.schemas.metrics_schema import MetricsResponse
 from app.database import get_db
-from app.schemas.metrics_schema import MetricsHistoryResponse
+from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse
 
 router = APIRouter(prefix="/metrics", tags=["Metrics"])
 
@@ -27,3 +27,9 @@ def metrics_history(
     skip : int = 0,
     db : Session = Depends(get_db)):
     return get_metrics_history(db , limit, skip)
+
+#listar apenas um metrica
+
+@router.get("/{metric_id}",response_model=MetricResponse)
+def metric(metric_id : int,db:Session = Depends(get_db)):
+    return get_metric(db , metric_id )

@@ -1,7 +1,7 @@
 import psutil
 from sqlalchemy.orm import Session
 from app.models.metrics_model import Metrics
-
+from fastapi import HTTPException
 
 def get_system_metrics():
     return {
@@ -44,3 +44,12 @@ def get_metrics_history(db:Session , limit: int = 50, skip: int = 0 ):
         .limit(limit)
         .all()
     )
+
+def get_metric(db:Session,metric_id):
+    metrica = db.query(Metrics).filter(Metrics.id == metric_id).first()
+    if metrica is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Metric not found"
+        )
+    return(metrica)

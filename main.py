@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes.metrics import router as metrics_router
+from app.routes.metrics_route import router as metrics_router
 from app.database import engine,Base
 from app.models.metrics_model import Metrics
 

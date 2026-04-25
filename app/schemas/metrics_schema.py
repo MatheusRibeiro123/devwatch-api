@@ -30,3 +30,17 @@ class MetricsHistoryResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+#///////////////////////////////////////////////////////////////////////
+
+class MetricResponse(BaseModel):
+    id : int
+    cpu_percent : float
+    disk_percent : float
+    memory_percent : float
+    created_at : datetime
+    
+
+    class Config:
+        from_attributes = True
+
