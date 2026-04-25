@@ -17,7 +17,7 @@ def get_system_metrics():
         "disk":{
             "total": psutil.disk_usage("C:\\").total,
             "used": psutil.disk_usage("C:\\").used,
-            "percent": psutil.disk_usage("C:\\").percent
+            "percent": psutil.disk_usage("C:\\").percent,
     }
     }
 
