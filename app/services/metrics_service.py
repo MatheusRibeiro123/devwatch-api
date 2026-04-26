@@ -2,6 +2,7 @@ import psutil
 from sqlalchemy.orm import Session
 from app.models.metrics_model import Metrics
 from fastapi import HTTPException
+from datetime import datetime
 
 def get_system_metrics():
     return {
@@ -36,9 +37,16 @@ def create_metric(db : Session):
 
     return(metric)
 
-def get_metrics_history(db:Session , limit: int = 50, skip: int = 0 ):
+def get_metrics_history(db:Session , limit: int = 50, skip: int = 0, start_date: datetime |None = None, end_date: datetime | None = None):
+    query = db.query(Metrics)
+
+    if start_date:
+        query = query.filter(Metrics.created_at >= start_date)
+
+    if end_date:
+        query = query.filter(Metrics.created_at <= end_date)
     return(
-        db.query(Metrics)
+        query
         .order_by(Metrics.created_at.desc())
         .offset(skip)
         .limit(limit)

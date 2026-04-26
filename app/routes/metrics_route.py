@@ -4,6 +4,7 @@ from app.services.metrics_service import get_system_metrics, create_metric,get_m
 from app.schemas.metrics_schema import MetricsResponse
 from app.database import get_db
 from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse
+from datetime import datetime
 
 router = APIRouter(prefix="/metrics", tags=["Metrics"])
 
@@ -25,8 +26,10 @@ def create_metric_route(db: Session = Depends(get_db)):
 def metrics_history(
     limit : int = 50,
     skip : int = 0,
+    start_date: datetime | None = None,
+    end_date : datetime | None = None,
     db : Session = Depends(get_db)):
-    return get_metrics_history(db , limit, skip)
+    return get_metrics_history(db , limit, skip, start_date, end_date)
 
 #listar apenas um metrica
 
