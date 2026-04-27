@@ -28,8 +28,10 @@ def metrics_history(
     skip : int = 0,
     start_date: datetime | None = None,
     end_date : datetime | None = None,
+    min_cpu : float | None = None,
+    max_cpu : float | None = None,
     db : Session = Depends(get_db)):
-    return get_metrics_history(db , limit, skip, start_date, end_date)
+    return get_metrics_history(db , limit, skip, start_date, end_date, max_cpu, min_cpu)
 
 #listar apenas um metrica
 

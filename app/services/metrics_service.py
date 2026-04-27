@@ -37,8 +37,17 @@ def create_metric(db : Session):
 
     return(metric)
 
-def get_metrics_history(db:Session , limit: int = 50, skip: int = 0, start_date: datetime |None = None, end_date: datetime | None = None):
+def get_metrics_history(
+        db:Session , limit: int = 50, skip: int = 0, start_date: datetime |None = None,
+        end_date: datetime | None = None, min_cpu : float | None = None, max_cpu : float | None = None):
+    
     query = db.query(Metrics)
+
+    if min_cpu is not None:
+        query = query.filter(Metrics.cpu_percent >= min_cpu)
+
+    if max_cpu is not None:
+        query = query.filter(Metrics.cpu_percent <= max_cpu)
 
     if start_date:
         query = query.filter(Metrics.created_at >= start_date)
@@ -54,10 +63,10 @@ def get_metrics_history(db:Session , limit: int = 50, skip: int = 0, start_date:
     )
 
 def get_metric(db:Session,metric_id):
-    metrica = db.query(Metrics).filter(Metrics.id == metric_id).first()
-    if metrica is None:
+    metric = db.query(Metrics).filter(Metrics.id == metric_id).first()
+    if metric is None:
         raise HTTPException(
             status_code=404,
             detail="Metric not found"
         )
-    return(metrica)
+    return(metric)
