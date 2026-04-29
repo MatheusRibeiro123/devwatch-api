@@ -3,30 +3,37 @@ from sqlalchemy.orm import Session
 from app.models.metrics_model import Metrics
 from fastapi import HTTPException
 from datetime import datetime
+import os
+
+disk_path = "C:\\" if os.name == "nt" else "/"
 
 def get_system_metrics():
+    cpu_percent = psutil.cpu_percent(interval=1)
+    memory = psutil.virtual_memory()
+    disk = psutil.disk_usage(disk_path)
+
     return {
-        "cpu":{
-            "percent": psutil.cpu_percent(interval=1),
+        "cpu": {
+            "percent": cpu_percent,
             "cores": psutil.cpu_count()
         },
-        "memory":{
-            "total": psutil.virtual_memory().total,
-            "used": psutil.virtual_memory().used,
-            "percent": psutil.virtual_memory().percent
+        "memory": {
+            "total": memory.total,
+            "used": memory.used,
+            "percent": memory.percent
         },
-        "disk":{
-            "total": psutil.disk_usage("C:\\").total,
-            "used": psutil.disk_usage("C:\\").used,
-            "percent": psutil.disk_usage("C:\\").percent,
-    }
+        "disk": {
+            "total": disk.total,
+            "used": disk.used,
+            "percent": disk.percent,
+        }
     }
 
-def create_metric(db : Session):
+def create_metric(db: Session):
     data = {
         "cpu_percent" : psutil.cpu_percent(interval=1),
         "memory_percent" : psutil.virtual_memory().percent,
-        "disk_percent" : psutil.disk_usage("C:\\").percent
+        "disk_percent" : psutil.disk_usage(disk_path).percent
     }
 
     metric = Metrics(**data)
@@ -35,13 +42,13 @@ def create_metric(db : Session):
     db.commit()
     db.refresh(metric)
 
-    return(metric)
+    return metric
 
 def get_metrics_history(
         db:Session , limit: int = 50, skip: int = 0, start_date: datetime |None = None,
         end_date: datetime | None = None, min_cpu : float | None = None, max_cpu : float | None = None):
     
-    query = db.query(Metrics)
+    query = db.query(Metrics).filter(True)
 
     if min_cpu is not None:
         query = query.filter(Metrics.cpu_percent >= min_cpu)
@@ -62,7 +69,7 @@ def get_metrics_history(
         .all()
     )
 
-def get_metric(db:Session,metric_id):
+def get_metric(db: Session, metric_id: int):
     metric = db.query(Metrics).filter(Metrics.id == metric_id).first()
     if metric is None:
         raise HTTPException(
