@@ -1,4 +1,4 @@
-# 🧭 DevWatch
+🧭 DevWatch
 
 API de monitoramento de sistema desenvolvida com **FastAPI**, com o objetivo de coletar, armazenar e consultar métricas da máquina em tempo real.
 
@@ -6,9 +6,7 @@ API de monitoramento de sistema desenvolvida com **FastAPI**, com o objetivo de 
 
 ## 🚧 Status do Projeto
 
-Este projeto ainda está em desenvolvimento.
-
-Está sendo utilizado como prática para aprendizado de desenvolvimento backend com **FastAPI**, arquitetura de APIs REST, integração com banco de dados relacionais e organização profissional de projetos Python.
+> Este projeto ainda está em desenvolvimento. Está sendo utilizado como prática para aprendizado de desenvolvimento backend com FastAPI, arquitetura de APIs REST, integração com banco de dados relacionais, containerização com Docker e organização profissional de projetos Python.
 
 ---
 
@@ -16,27 +14,29 @@ Está sendo utilizado como prática para aprendizado de desenvolvimento backend 
 
 Desenvolver uma API capaz de:
 
-* Monitorar uso de CPU
-* Monitorar uso de memória RAM
-* Monitorar uso de disco
-* Salvar métricas em banco de dados
-* Consultar histórico de métricas
-* Trabalhar com paginação de resultados
-* Aplicar filtros dinâmicos
-* Evoluir futuramente para geração de alertas e monitoramento em tempo real
+- Monitorar uso de CPU
+- Monitorar uso de memória RAM
+- Monitorar uso de disco
+- Salvar métricas em banco de dados PostgreSQL
+- Consultar histórico de métricas
+- Trabalhar com paginação de resultados
+- Aplicar filtros dinâmicos
+- Funcionar em ambiente local e Docker
+- Evoluir futuramente para geração de alertas e monitoramento em tempo real
 
 ---
 
 ## ⚙️ Tecnologias utilizadas
 
-* Python
-* FastAPI
-* SQLAlchemy
-* PostgreSQL
-* Pydantic
-* Uvicorn
-* psutil
-* python-dotenv
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Pydantic
+- Uvicorn
+- psutil
+- python-dotenv
+- Docker
 
 ---
 
@@ -44,180 +44,126 @@ Desenvolver uma API capaz de:
 
 Este projeto está sendo desenvolvido com foco em:
 
-* Estruturação de APIs com FastAPI
-* Arquitetura backend organizada
-* Separação de responsabilidades (`routes`, `services`, `models`, `schemas`)
-* Integração com PostgreSQL usando SQLAlchemy
-* Persistência de dados
-* Dependency Injection com FastAPI
-* Validação de dados com Pydantic
-* Paginação de resultados (`limit` e `skip`)
-* Filtros dinâmicos em queries
-* Tratamento de erros
-* Variáveis de ambiente com `.env`
-* Coleta de dados do sistema com psutil
+- Estruturação de APIs com FastAPI
+- Arquitetura backend organizada
+- Separação de responsabilidades (routes, services, models, schemas)
+- Integração com PostgreSQL usando SQLAlchemy
+- Persistência de dados
+- Dependency Injection no FastAPI
+- Validação de dados com Pydantic
+- Paginação de resultados (limit e skip)
+- Filtros dinâmicos em queries
+- Tratamento de erros
+- Variáveis de ambiente com `.env`
+- Coleta de dados do sistema com `psutil`
+- Containerização com Docker
+- Compatibilidade entre Windows e Linux (cross-platform)
 
 ---
 
 ## 📂 Estrutura do Projeto
-
-```plaintext
 app/
 ├── models/
 ├── routes/
 ├── schemas/
 ├── services/
-```
+
+text
 
 ---
 
 ## 📌 Funcionalidades atuais
 
-### `GET /metrics`
-
+### 🔹 `GET /metrics`
 Retorna métricas atuais do sistema em tempo real.
 
----
-
-### `POST /metrics`
-
+### 🔹 `POST /metrics`
 Coleta e salva métricas no banco de dados.
 
----
+### 🔹 `GET /metrics/history`
+Retorna histórico de métricas com suporte a:
+- Paginação
+- Filtros dinâmicos
 
-### `GET /metrics/history`
+**Exemplo:**  
+`/metrics/history?limit=10&skip=0`
 
-Retorna histórico de métricas salvas com suporte a:
-
-* Paginação
-* Filtros dinâmicos
-
-Exemplo:
-
-```http
-/metrics/history?limit=10&skip=0
-```
-
----
-
-### `GET /metrics/{metric_id}`
-
+### 🔹 `GET /metrics/{metric_id}`
 Retorna uma métrica específica pelo ID.
 
 ---
 
-## 🐘 Configuração do PostgreSQL
+## 🐳 Execução com Docker
 
-Crie um banco chamado:
+1. **Build da imagem**
+   ```bash
+   docker build -t devwatch .
+Executar container
 
-```sql
+bash
+docker run -p 8000:8000 \
+  -e DB_HOST=host.docker.internal \
+  devwatch
+🐘 Configuração do PostgreSQL
+Crie o banco:
+
+sql
 CREATE DATABASE devwatch;
-```
+🔐 Configuração do .env
+Crie um arquivo .env na raiz do projeto:
 
----
+text
+DB_HOST=localhost
+⚙️ Instalação
+Clone o repositório
 
-## 🔐 Configuração do `.env`
+bash
+git clone <https://github.com/MatheusRibeiro123/devwatch-api.git>
+Acesse o projeto
 
-Crie um arquivo `.env` na raiz do projeto seguindo o modelo do `.env.example`.
-
-Exemplo:
-
-```env
-DATABASE_URL=postgresql://USER:PASSWORD@localhost/devwatch
-```
-
----
-
-## ⚙️ Instalação
-
-### Clone o repositório
-
-```bash
-git clone <URL_DO_REPOSITORIO>
-```
-
----
-
-### Acesse a pasta do projeto
-
-```bash
+bash
 cd DevWatch
-```
+Crie o ambiente virtual
 
----
-
-### Crie um ambiente virtual
-
-```bash
+bash
 python -m venv venv
-```
+Ative o ambiente virtual
 
----
+Windows:
 
-### Ative o ambiente virtual
-
-#### Windows
-
-```bash
+bash
 venv\Scripts\activate
-```
+Linux/macOS:
 
-#### Linux/macOS
-
-```bash
+bash
 source venv/bin/activate
-```
+Instale as dependências
 
----
-
-### Instale as dependências
-
-```bash
+bash
 pip install -r requirements.txt
-```
-
----
-
-## ▶️ Executando a API
-
-```bash
+▶️ Executando a API (local)
+bash
 uvicorn app.main:app --reload
-```
+📚 Documentação
+Swagger: http://127.0.0.1:8000/docs
 
----
+Redoc: http://127.0.0.1:8000/redoc
 
-## 📚 Documentação automática
+🚀 Próximas melhorias
+Sistema de autenticação
 
-Após iniciar a API:
+Geração de alertas
 
-Swagger UI:
+Dashboard frontend
 
-```plaintext
-http://127.0.0.1:8000/docs
-```
+Monitoramento em tempo real
 
-Redoc:
+docker-compose (API + PostgreSQL juntos)
 
-```plaintext
-http://127.0.0.1:8000/redoc
-```
+Testes automatizados
 
----
+Deploy da aplicação
 
-## 🚀 Próximas melhorias
-
-* Sistema de autenticação
-* Geração de alertas
-* Dashboard frontend
-* Monitoramento em tempo real
-* Dockerização
-* Testes automatizados
-* Deploy da aplicação
-
----
-
-## 👨‍💻 Autor
-
+👨‍💻 Autor
 Matheus Ribeiro
-
 Projeto desenvolvido como prática de estudos em desenvolvimento backend com Python.
