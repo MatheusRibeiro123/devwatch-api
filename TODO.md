@@ -1,10 +1,10 @@
 # TODO - DevWatch
 
 ## Docker
-- [ ] Finalizar Dockerfile
-- [ ] Criar docker-compose
-- [ ] Configurar PostgreSQL no Docker
-- [ ] Testar conexão entre containers
+- [x] Finalizar Dockerfile
+- [x] Criar docker-compose
+- [x] Configurar PostgreSQL no Docker
+- [x] Testar conexão entre containers
 
 ## Backend
 - [ ] Automatizar coleta de métricas
