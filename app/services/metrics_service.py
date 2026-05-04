@@ -77,3 +77,20 @@ def get_metric(db: Session, metric_id: int):
             detail="Metric not found"
         )
     return(metric)
+
+def save_metrics(db:Session , metrics):
+   
+    novo = Metrics(
+        cpu_percent=metrics["cpu"]["percent"],
+        memory_percent=metrics["memory"]["percent"],
+        disk_percent=metrics["disk"]["percent"],
+        created_at=datetime.utcnow()
+    )
+    try:
+        db.add(novo)
+        db.commit()
+        db.refresh(novo)
+    except Exception as e:
+        db.rollback()
+        print("Erro ao salvar metricas", e)
+

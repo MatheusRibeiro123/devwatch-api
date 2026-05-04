@@ -7,7 +7,7 @@
 - [x] Testar conexão entre containers
 
 ## Backend
-- [ ] Automatizar coleta de métricas
+- [x] Automatizar coleta de métricas
 - [ ] Criar serviço de monitoramento contínuo
 - [ ] Melhorar tratamento de erros
 
