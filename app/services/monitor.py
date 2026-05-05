@@ -1,27 +1,27 @@
 import time
 import threading
-import psutil
 import os
+from app.services.metrics_service import get_system_metrics,save_metrics
+from app.database import SessionLocal
+
 
 disk_path = "C:\\" if os.name == "nt" else "/"
 
 def monitor_loop():
     
     while True:
-        try:
-            cpu_percent = psutil.cpu_percent()
-            disk_percent = psutil.disk_usage(disk_path).percent
-            memory_percent = psutil.virtual_memory().percent
+        db = SessionLocal()
 
-            print(f"""
-            CPU:{cpu_percent}%
-            RAM:{memory_percent}%
-            DISK:{disk_percent}%
-""",flush=True)
+        try:
+            metrics = get_system_metrics()
+            save_metrics(db , metrics)
            
         
         except Exception as e:
-            print(e)
+            print("erro no loop",e)
+
+        finally:
+            db.close
 
         time.sleep(5)
 

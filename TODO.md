@@ -8,8 +8,10 @@
 
 ## Backend
 - [x] Automatizar coleta de métricas
-- [ ] Criar serviço de monitoramento contínuo
+- [x] Criar serviço de monitoramento contínuo
 - [ ] Melhorar tratamento de erros
+- [ ] Criar rota /metrics/latest
+- [ ] Criar rota /metrics/summary
 
 ## Dashboard
 - [ ] Exibir gráficos de CPU

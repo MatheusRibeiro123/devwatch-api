@@ -8,7 +8,7 @@ import os
 disk_path = "C:\\" if os.name == "nt" else "/"
 
 def get_system_metrics():
-    cpu_percent = psutil.cpu_percent(interval=1)
+    cpu_percent = psutil.cpu_percent()
     memory = psutil.virtual_memory()
     disk = psutil.disk_usage(disk_path)
 
