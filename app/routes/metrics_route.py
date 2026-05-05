@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric
+from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric,get_latest_metric
 from app.schemas.metrics_schema import MetricsResponse
 from app.database import get_db
 from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse
@@ -33,8 +33,26 @@ def metrics_history(
     db : Session = Depends(get_db)):
     return get_metrics_history(db , limit, skip, start_date, end_date, max_cpu, min_cpu)
 
+#listar a ultima metrica registrada no sistema
+
+@router.get("/latest",response_model= MetricResponse)
+def latest_metric(db:Session = Depends(get_db)):
+    metric = get_latest_metric(db)
+
+    if not metric:
+        raise HTTPException(status_code= 404, detail= "nenhuma metrica encontrada!")
+    
+    return metric
+
 #listar apenas um metrica
 
 @router.get("/{metric_id}",response_model=MetricResponse)
 def metric(metric_id : int,db:Session = Depends(get_db)):
     return get_metric(db , metric_id )
+
+
+
+
+
+
+

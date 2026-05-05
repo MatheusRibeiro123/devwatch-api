@@ -94,3 +94,10 @@ def save_metrics(db:Session , metrics):
         db.rollback()
         print("Erro ao salvar metricas", e)
 
+def get_latest_metric(db : Session):
+
+    metric = db.query(Metrics).order_by(Metrics.created_at.desc()).first()
+
+    return metric
+
+

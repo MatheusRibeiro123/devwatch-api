@@ -17,3 +17,5 @@
 - [ ] Exibir gráficos de CPU
 - [ ] Exibir gráficos de RAM
 - [ ] Mostrar histórico de métricas
+
+    AJUSTAR README E .ENV.EXAMPLE
