@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric,get_latest_metric
+from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric,get_latest_metric,get_metrics_summary
 from app.schemas.metrics_schema import MetricsResponse
 from app.database import get_db
 from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse
@@ -43,6 +43,16 @@ def latest_metric(db:Session = Depends(get_db)):
         raise HTTPException(status_code= 404, detail= "nenhuma metrica encontrada!")
     
     return metric
+
+#listar a media das metricas salvas
+@router.get("/summary")
+def avg_metrics(db:Session =Depends(get_db)):
+    
+    average = get_metrics_summary(db)
+    
+    return average
+
+
 
 #listar apenas um metrica
 

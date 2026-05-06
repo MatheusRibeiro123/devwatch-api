@@ -10,7 +10,7 @@
 - [x] Automatizar coleta de métricas
 - [x] Criar serviço de monitoramento contínuo
 - [ ] Melhorar tratamento de erros
-- [ ] Criar rota /metrics/latest
+- [x] Criar rota /metrics/latest
 - [ ] Criar rota /metrics/summary
 
 ## Dashboard
@@ -18,4 +18,3 @@
 - [ ] Exibir gráficos de RAM
 - [ ] Mostrar histórico de métricas
 
-    AJUSTAR README E .ENV.EXAMPLE

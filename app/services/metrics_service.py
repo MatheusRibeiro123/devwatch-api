@@ -4,6 +4,7 @@ from app.models.metrics_model import Metrics
 from fastapi import HTTPException
 from datetime import datetime
 import os
+from sqlalchemy import func
 
 disk_path = "C:\\" if os.name == "nt" else "/"
 
@@ -99,5 +100,17 @@ def get_latest_metric(db : Session):
     metric = db.query(Metrics).order_by(Metrics.created_at.desc()).first()
 
     return metric
+
+def get_metrics_summary(db : Session):
+    
+    result = db.query(func.avg(Metrics.cpu_percent),func.avg(Metrics.disk_percent),func.avg(Metrics.memory_percent)).first()
+
+    return {
+        "cpu_avg":result[0] or 0,
+        "disk_avg":result[1] or 0,
+        "memory_avg":result[2] or 0  
+        }
+
+
 
 
