@@ -11,7 +11,9 @@
 - [x] Criar serviço de monitoramento contínuo
 - [ ] Melhorar tratamento de erros
 - [x] Criar rota /metrics/latest
-- [ ] Criar rota /metrics/summary
+- [x] Criar rota /metrics/summary
+- [ ] Melhorar rota /summary com filtros
+
 
 ## Dashboard
 - [ ] Exibir gráficos de CPU
