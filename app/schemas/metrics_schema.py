@@ -45,3 +45,9 @@ class MetricResponse(BaseModel):
     class Config:
         from_attributes = True
 
+#///////////////////////////////////////////////////////////////////////
+class MetricsSummaryResponse(BaseModel):
+    avg_cpu_percent : float
+    avg_memory_percent : float
+    avg_disk_percent : float
+

@@ -2,7 +2,7 @@ import psutil
 from sqlalchemy.orm import Session
 from app.models.metrics_model import Metrics
 from fastapi import HTTPException
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from sqlalchemy import func
 
@@ -101,15 +101,22 @@ def get_latest_metric(db : Session):
 
     return metric
 
-def get_metrics_summary(db : Session):
+def get_metrics_summary(db : Session,minutes: int = None):
     
-    result = db.query(func.avg(Metrics.cpu_percent),func.avg(Metrics.disk_percent),func.avg(Metrics.memory_percent)).first()
+    query = db.query(func.avg(Metrics.cpu_percent),(func.avg(Metrics.memory_percent)),(func.avg(Metrics.disk_percent))) 
+
+    if minutes :
+        time_limit= datetime.utcnow() - timedelta(minutes=minutes)
+
+        query = query.filter(Metrics.created_at >= time_limit)
+
+    result = query.first()
 
     return {
-        "cpu_avg":result[0] or 0,
-        "disk_avg":result[1] or 0,
-        "memory_avg":result[2] or 0  
-        }
+        "cpu_avg": result[0] or 0,
+        "memory_avg": result[1] or 0,
+        "disk_avg": result[2] or 0
+    }
 
 
 

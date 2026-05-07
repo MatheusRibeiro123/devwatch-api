@@ -12,7 +12,13 @@
 - [ ] Melhorar tratamento de erros
 - [x] Criar rota /metrics/latest
 - [x] Criar rota /metrics/summary
-- [ ] Melhorar rota /summary com filtros
+
+## Melhorias da /summary
+ - [ ] Arredondar valores (round)
+ - [ ] Adicionar max() das métricas
+ - [ ] Adicionar count() de registros
+ - [ ] Validar parâmetro minutes
+ - [ ] Adicionar filtros start/end
 
 
 ## Dashboard

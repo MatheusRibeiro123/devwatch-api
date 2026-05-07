@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.services.metrics_service import get_system_metrics, create_metric,get_metrics_history,get_metric,get_latest_metric,get_metrics_summary
 from app.schemas.metrics_schema import MetricsResponse
 from app.database import get_db
-from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse
+from app.schemas.metrics_schema import MetricsHistoryResponse,MetricResponse,MetricsSummaryResponse
 from datetime import datetime
 
 router = APIRouter(prefix="/metrics", tags=["Metrics"])
@@ -45,10 +45,10 @@ def latest_metric(db:Session = Depends(get_db)):
     return metric
 
 #listar a media das metricas salvas
-@router.get("/summary")
-def avg_metrics(db:Session =Depends(get_db)):
+@router.get("/summary",response_model=MetricsSummaryResponse)
+def avg_metrics(db:Session =Depends(get_db), minutes: int = None):
     
-    average = get_metrics_summary(db)
+    average = get_metrics_summary(db, minutes)  
     
     return average
 
