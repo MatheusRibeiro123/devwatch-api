@@ -17,7 +17,7 @@
  - [ ] Arredondar valores (round)
  - [ ] Adicionar max() das métricas
  - [ ] Adicionar count() de registros
- - [ ] Validar parâmetro minutes
+ - [x] Validar parâmetro minutes
  - [ ] Adicionar filtros start/end
 
 

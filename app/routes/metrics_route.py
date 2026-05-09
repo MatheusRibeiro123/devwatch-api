@@ -46,7 +46,7 @@ def latest_metric(db:Session = Depends(get_db)):
 
 #listar a media das metricas salvas
 @router.get("/summary",response_model=MetricsSummaryResponse)
-def avg_metrics(db:Session =Depends(get_db), minutes: int = None):
+def avg_metrics(db:Session =Depends(get_db), minutes: int | None = None):
     
     average = get_metrics_summary(db, minutes)  
     

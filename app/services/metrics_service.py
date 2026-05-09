@@ -101,11 +101,19 @@ def get_latest_metric(db : Session):
 
     return metric
 
-def get_metrics_summary(db : Session,minutes: int = None):
+def get_metrics_summary(db : Session,minutes: int | None = None):
     
     query = db.query(func.avg(Metrics.cpu_percent),(func.avg(Metrics.memory_percent)),(func.avg(Metrics.disk_percent))) 
 
-    if minutes :
+    if minutes is not None:
+        
+        if minutes <= 0:
+            raise HTTPException(status_code=400, detail="O parâmetro 'minutes' deve ser um número positivo.")
+        
+        if minutes > 10080:
+            raise HTTPException(status_code=400, detail="O parâmetro 'minutes' não pode ser maior que 10080 (7 dias).")
+        
+        
         time_limit= datetime.utcnow() - timedelta(minutes=minutes)
 
         query = query.filter(Metrics.created_at >= time_limit)
