@@ -103,7 +103,7 @@ def get_latest_metric(db : Session):
 
 def get_metrics_summary(db : Session,minutes: int | None = None):
     
-    query = db.query(func.avg(Metrics.cpu_percent),(func.avg(Metrics.memory_percent)),(func.avg(Metrics.disk_percent))) 
+    query = db.query(func.avg(Metrics.cpu_percent),func.avg(Metrics.memory_percent),func.avg(Metrics.disk_percent),func.count(Metrics.id)) 
 
     if minutes is not None:
         
@@ -123,7 +123,8 @@ def get_metrics_summary(db : Session,minutes: int | None = None):
     return {
         "cpu_avg": round(result[0] or 0, 2),
         "memory_avg": round(result[1] or 0, 2),
-        "disk_avg": round(result[2] or 0, 2)
+        "disk_avg": round(result[2] or 0, 2),
+        "count": result[3] or 0
     }
 
 
