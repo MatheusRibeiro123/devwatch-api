@@ -121,9 +121,9 @@ def get_metrics_summary(db : Session,minutes: int | None = None):
     result = query.first()
 
     return {
-        "cpu_avg": result[0] or 0,
-        "memory_avg": result[1] or 0,
-        "disk_avg": result[2] or 0
+        "cpu_avg": round(result[0] or 0, 2),
+        "memory_avg": round(result[1] or 0, 2),
+        "disk_avg": round(result[2] or 0, 2)
     }
 
 

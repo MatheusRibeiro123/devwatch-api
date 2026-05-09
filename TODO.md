@@ -14,7 +14,7 @@
 - [x] Criar rota /metrics/summary
 
 ## Melhorias da /summary
- - [ ] Arredondar valores (round)
+ - [x] Arredondar valores (round)
  - [ ] Adicionar max() das métricas
  - [ ] Adicionar count() de registros
  - [x] Validar parâmetro minutes
