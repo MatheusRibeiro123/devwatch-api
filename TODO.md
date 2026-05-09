@@ -15,10 +15,10 @@
 
 ## Melhorias da /summary
  - [x] Arredondar valores (round)
- - [ ] Adicionar max() das métricas
+ - [x] Adicionar max() das métricas
  - [x] Adicionar count() de registros
  - [x] Validar parâmetro minutes
- - [ ] Adicionar filtros start/end
+ - [x] Adicionar filtros start/end
 
 
 ## Dashboard

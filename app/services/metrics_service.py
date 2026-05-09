@@ -101,7 +101,7 @@ def get_latest_metric(db : Session):
 
     return metric
 
-def get_metrics_summary(db : Session,minutes: int | None = None):
+def get_metrics_summary(db : Session,minutes: int | None = None, start_date: datetime | None = None, end_date: datetime | None = None):
     
     query = db.query(
         func.avg(Metrics.cpu_percent),
@@ -112,6 +112,18 @@ def get_metrics_summary(db : Session,minutes: int | None = None):
         func.max(Metrics.disk_percent),
         func.count(Metrics.id)
         ) 
+    
+    if minutes is not None and (start_date or end_date):
+        raise HTTPException(status_code=400, detail="Os parâmetros 'minutes' e 'start_date/end_date' não podem ser usados juntos.")
+
+    if start_date is not None and end_date is not None and start_date > end_date:
+        raise HTTPException(status_code=400, detail="O parâmetro 'start_date' deve ser anterior a 'end_date'.")
+
+    if start_date is not None:
+        query = query.filter(Metrics.created_at >= start_date)
+
+    if end_date is not None:
+        query = query.filter(Metrics.created_at <= end_date)
 
     if minutes is not None:
         
