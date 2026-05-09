@@ -47,7 +47,11 @@ class MetricResponse(BaseModel):
 
 #///////////////////////////////////////////////////////////////////////
 class MetricsSummaryResponse(BaseModel):
-    avg_cpu_percent : float
-    avg_memory_percent : float
-    avg_disk_percent : float
+    cpu_avg: float
+    memory_avg: float
+    disk_avg: float
+    cpu_max: float
+    memory_max: float
+    disk_max: float
+    count : int
 
