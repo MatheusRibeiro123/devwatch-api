@@ -9,7 +9,6 @@
 ## Backend
 - [x] Automatizar coleta de métricas
 - [x] Criar serviço de monitoramento contínuo
-- [ ] Melhorar tratamento de erros
 - [x] Criar rota /metrics/latest
 - [x] Criar rota /metrics/summary
 
@@ -19,6 +18,16 @@
  - [x] Adicionar count() de registros
  - [x] Validar parâmetro minutes
  - [x] Adicionar filtros start/end
+
+ ## Melhorar tratamento de erros
+
+- [x] Criar exception handlers globais no FastAPI
+- [ ] Tratar erros de conexão com PostgreSQL
+- [ ] Adicionar logs de erro no backend
+- [ ] Validar parâmetros inválidos nas rotas
+- [ ] Retornar mensagens padronizadas na API
+- [ ] Evitar quebra da coleta automática de métricas
+- [ ] Tratar timeout/conexão perdida no banco
 
 
 ## Dashboard
