@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv
+from sqlalchemy.exc import OperationalError
+from app.exceptions.database_exceptions import DatabaseConnectionError
 
 load_dotenv()
 
@@ -12,7 +14,7 @@ DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-print(DATABASE_URL)
+
 engine = create_engine(
     DATABASE_URL
 )
@@ -27,5 +29,9 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
+
+    except OperationalError as e:
+        raise DatabaseConnectionError() from e
+    
     finally:
         db.close()
