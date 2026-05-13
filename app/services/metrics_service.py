@@ -5,6 +5,9 @@ from fastapi import HTTPException
 from datetime import datetime, timedelta
 import os
 from sqlalchemy import func
+import logging
+
+logger = logging.getLogger(__name__)
 
 disk_path = "C:\\" if os.name == "nt" else "/"
 
@@ -39,11 +42,18 @@ def create_metric(db: Session):
 
     metric = Metrics(**data)
 
-    db.add(metric)
-    db.commit()
-    db.refresh(metric)
+    try:
+        db.add(metric)
+        db.commit()
+        db.refresh(metric)
+        
+        return metric
+    
+    except Exception as e:
+        db.rollback()
+        logger.exception(f"Erro ao criar métrica: {e}")
 
-    return metric
+    
 
 def get_metrics_history(
         db:Session , limit: int = 50, skip: int = 0, start_date: datetime |None = None,
@@ -77,7 +87,7 @@ def get_metric(db: Session, metric_id: int):
             status_code=404,
             detail="Metric not found"
         )
-    return(metric)
+    return metric
 
 def save_metrics(db:Session , metrics):
    
@@ -93,11 +103,14 @@ def save_metrics(db:Session , metrics):
         db.refresh(novo)
     except Exception as e:
         db.rollback()
-        print("Erro ao salvar metricas", e)
+        logger.exception(f"Erro ao salvar métricas: {e}")
 
 def get_latest_metric(db : Session):
 
     metric = db.query(Metrics).order_by(Metrics.created_at.desc()).first()
+
+    if metric is None:
+        raise HTTPException(status_code=404, detail="Nenhuma métrica encontrada.")
 
     return metric
 
@@ -139,6 +152,9 @@ def get_metrics_summary(db : Session,minutes: int | None = None, start_date: dat
         query = query.filter(Metrics.created_at >= time_limit)
 
     result = query.first()
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="Nenhuma métrica encontrada.")
 
     return {
         "cpu_avg": round(result[0] or 0, 2),
