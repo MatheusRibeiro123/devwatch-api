@@ -5,6 +5,7 @@ from app.models.metrics_model import Metrics
 from app.services.monitor import start_monitor
 from app.handles.exceptions_handles import register_handlers
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 
 logging.basicConfig(level=logging.INFO)
@@ -12,6 +13,17 @@ logger = logging.getLogger(__name__)
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+    ],
+    allow_methods=["*"],
+    allow_credentials=True,
+    allow_headers=["*"],
+)
 
 app.include_router(metrics_router)
 

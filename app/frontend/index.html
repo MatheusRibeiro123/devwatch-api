@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevWatch Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="logo">
+      <span class="logo-bracket">[</span>DevWatch<span class="logo-bracket">]</span>
+    </div>
+    <div class="topbar-right">
+      <div class="status" id="status-badge">
+        <span class="status-dot"></span>
+        <span class="status-text">System Online</span>
+      </div>
+      <div class="last-update" id="last-update">--:--:--</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <h1>System Overview</h1>
+      <p>Real-time machine monitoring · updates every 3s</p>
+    </div>
+
+    <!-- METRIC CARDS -->
+    <div class="grid">
+
+      <div class="card" id="card-cpu">
+        <div class="card-header">
+          <div class="card-title">CPU Usage</div>
+          <div class="card-icon">⚙</div>
+        </div>
+        <div id="cpu" class="value">--%</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-cpu"></div></div>
+        <div class="hint">Processor load</div>
+      </div>
+
+      <div class="card" id="card-ram">
+        <div class="card-header">
+          <div class="card-title">Memory</div>
+          <div class="card-icon">◈</div>
+        </div>
+        <div id="ram" class="value">--%</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-ram"></div></div>
+        <div class="hint">RAM utilization</div>
+      </div>
+
+      <div class="card" id="card-disk">
+        <div class="card-header">
+          <div class="card-title">Disk</div>
+          <div class="card-icon">◫</div>
+        </div>
+        <div id="disk" class="value">--%</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-disk"></div></div>
+        <div class="hint">Storage usage</div>
+      </div>
+
+    </div>
+
+    <!-- PANELS ROW -->
+    <div class="panels-row">
+
+      <!-- SYSTEM DETAILS -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2>System Details</h2>
+          <span class="panel-tag">LIVE</span>
+        </div>
+        <div id="details" class="details-grid">
+          <div class="detail-item"><span class="detail-label">CPU Cores</span><span class="detail-value" id="d-cores">--</span></div>
+          <div class="detail-item"><span class="detail-label">RAM Used</span><span class="detail-value" id="d-ram">--</span></div>
+          <div class="detail-item"><span class="detail-label">RAM Total</span><span class="detail-value" id="d-ram-total">--</span></div>
+          <div class="detail-item"><span class="detail-label">Disk Used</span><span class="detail-value" id="d-disk">--</span></div>
+          <div class="detail-item"><span class="detail-label">Disk Total</span><span class="detail-value" id="d-disk-total">--</span></div>
+        </div>
+      </div>
+
+      <!-- SUMMARY / AVERAGES -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Averages</h2>
+          <span class="panel-tag">SUMMARY</span>
+        </div>
+        <div class="details-grid" id="summary-content">
+          <div class="detail-item"><span class="detail-label">Avg CPU</span><span class="detail-value" id="s-cpu">--</span></div>
+          <div class="detail-item"><span class="detail-label">Avg RAM</span><span class="detail-value" id="s-ram">--</span></div>
+          <div class="detail-item"><span class="detail-label">Avg Disk</span><span class="detail-value" id="s-disk">--</span></div>
+          <div class="detail-item"><span class="detail-label">Records</span><span class="detail-value" id="s-count">--</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HISTORY TABLE -->
+    <div class="panel panel-full">
+      <div class="panel-header">
+        <h2>Recent History</h2>
+        <div class="panel-actions">
+          <button class="btn-save" id="btn-save" onclick="saveMetric()">+ Save Snapshot</button>
+          <span class="panel-tag">HISTORY</span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Timestamp</th>
+              <th>CPU %</th>
+              <th>RAM %</th>
+              <th>Disk %</th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+            <tr><td colspan="5" class="table-empty">No history yet · click "Save Snapshot" to record</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
