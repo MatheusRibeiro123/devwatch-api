@@ -3,7 +3,7 @@ from app.routes.metrics_route import router as metrics_router
 from app.database import engine,Base
 from app.models.metrics_model import Metrics
 from app.services.monitor import start_monitor
-from app.handles.exceptions_handles import register_handlers
+from app.handlers.exceptions_handlers import register_handlers
 import logging
 from fastapi.middleware.cors import CORSMiddleware
 

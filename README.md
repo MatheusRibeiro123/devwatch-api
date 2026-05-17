@@ -1,20 +1,28 @@
-# 🧭 DevWatch
+#  DevWatch 📈
 
-API de monitoramento de sistema desenvolvida com **FastAPI**, com foco em coleta, armazenamento e análise de métricas da máquina em tempo real.
+API de monitoramento de sistema desenvolvida com FastAPI para coleta, armazenamento e análise de métricas em tempo real.
 
 ---
 
-# 🚧 Status do Projeto
+# 📸 Preview
 
-Projeto em desenvolvimento utilizado para prática de:
+![Dashboard DevWatch](./preview.png)
 
-* Backend com FastAPI
-* Arquitetura REST
-* Integração com PostgreSQL
-* Docker
-* Tratamento de erros
-* Logging
-* Organização de projetos Python
+---
+
+
+# ✅ Status do Projeto
+
+Projeto funcional e dockerizado.
+
+Atualmente o DevWatch possui:
+- Backend FastAPI
+- Dashboard web
+- PostgreSQL
+- Docker Compose
+- Coleta automática de métricas
+- Histórico e estatísticas
+- Comunicação entre containers
 
 ---
 
@@ -32,6 +40,7 @@ Construir uma API capaz de:
 * Executar monitoramento contínuo em background
 * Rodar em ambiente local e Docker
 * Evoluir futuramente para dashboard e alertas em tempo real
+* Mostrar gráficos e dados de métricas em dashboards interativos
 
 ---
 
@@ -46,12 +55,30 @@ Construir uma API capaz de:
 * psutil
 * python-dotenv
 * Docker
+* HTML
+* CSS
+* JavaScript
+* Nginx
+* Docker Compose
+
+---
+
+# 🖥️ Dashboard
+
+O projeto possui interface web para visualização em tempo real das métricas do sistema.
+
+A interface consome a API FastAPI e exibe:
+- CPU
+- RAM
+- Disco
+- Histórico
+- Resumos estatísticos
 
 ---
 
 # 🧠 Aprendizados
 
-Este projeto está sendo desenvolvido com foco em:
+Este projeto foi desenvolvido com foco em:
 
 * Estruturação de APIs com FastAPI
 * Arquitetura backend organizada
@@ -68,22 +95,47 @@ Este projeto está sendo desenvolvido com foco em:
 * Threads/background tasks
 * Variáveis de ambiente (`.env`)
 * Containerização com Docker
+* Orquestração de containers com Docker Compose
+* Comunicação entre containers
+* Integração entre frontend e backend
+* Configuração de CORS no FastAPI
+* Consumo de API com JavaScript (`fetch`)
+* Estruturação de dashboard frontend
 * Compatibilidade entre Windows e Linux
+
+---
+
+# 👷 Arquitetura 
+
+```text
+Frontend (Nginx)
+       ↓
+FastAPI Backend
+       ↓
+PostgreSQL
+```
 
 ---
 
 # 📂 Estrutura do Projeto
 
 ```bash
-app/
-├── database/
-├── exceptions/
-├── handlers/
-├── models/
-├── routes/
-├── schemas/
-├── services/
-└── main.py
+.
+├── app/
+│   ├── exceptions/
+│   ├── frontend/
+│   ├── handlers/
+│   ├── models/
+│   ├── routes/
+│   ├── schemas/
+│   ├── services/
+│   └── main.py
+│
+├── .env.example
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -166,19 +218,25 @@ Isso irá:
 
 * Subir a API FastAPI
 * Subir o PostgreSQL
+* Subir o frontend do dashboard
 * Conectar automaticamente os containers
+
+---
+
+
+# 🌐 Acessando a Aplicação
+
+Após iniciar os containers, acesse:
+
+* Frontend Dashboard: http://localhost:3000
+* API Swagger Docs: http://localhost:8000/docs
+* API Redoc: http://localhost:8000/redoc
 
 ---
 
 # 🐘 Banco de Dados
 
 O banco é criado automaticamente pelo Docker Compose.
-
-Caso precise criar manualmente:
-
-```sql
-CREATE DATABASE devwatch;
-```
 
 ---
 
@@ -202,37 +260,8 @@ Clone o repositório:
 
 ```bash
 git clone https://github.com/MatheusRibeiro123/devwatch-api.git
-cd DevWatch
+cd devwatch-api
 ```
-
----
-
-# ▶️ Executando a Aplicação
-
-⚠️ O projeto atualmente roda via Docker Compose.
-
-```bash
-docker compose up --build
-```
-
----
-
-# 📚 Documentação da API
-
-Após subir o projeto:
-
-* Swagger: http://localhost:8000/docs
-* Redoc: http://localhost:8000/redoc
-
----
-
-# 📈 Próximos Passos
-
-* Dashboard com gráficos
-* Visualização em tempo real
-* Sistema de alertas
-* Autenticação
-* Melhorias de observabilidade
 
 ---
 
