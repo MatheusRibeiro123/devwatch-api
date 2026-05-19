@@ -29,14 +29,14 @@
 - [x] Evitar quebra da coleta automática de métricas
 
 ## Dashboard
-- [ ] Criar dashboard React
-- [ ] Integrar frontend com API FastAPI
-- [ ] Exibir métricas em tempo real
-- [ ] Exibir gráficos de CPU
-- [ ] Exibir gráficos de RAM
-- [ ] Mostrar histórico de métricas
-- [ ] Mostrar resumo das métricas
-- [ ] Mostrar última métrica registrada
-- [ ] Dockerizar frontend
-- [ ] Melhorar responsividade do dashboard
+- [x] Criar dashboard web
+- [x] Integrar frontend com API FastAPI
+- [x] Exibir métricas em tempo real
+- [x] Exibir gráficos de CPU
+- [x] Exibir gráficos de RAM
+- [x] Mostrar histórico de métricas
+- [x] Mostrar resumo das métricas
+- [x] Mostrar última métrica registrada
+- [x] Dockerizar frontend
+- [x] Melhorar responsividade do dashboard
 
